@@ -30,10 +30,10 @@ Waiting for implementation.
 
    > Ref:https://docs.docker.com/engine/security/seccomp/
 
-   Use seccomp security profile `xxx.json`, add options when run:
+   Use seccomp security profile `seccomp/v1.json`, add options when run:
 
    ```bash
-   --security-opt seccomp=/path/to/seccomp/xxx.json
+   --security-opt seccomp=/path/to/files/seccomp/v1.json
    ```
 
    Docker provides with [default.json](https://github.com/moby/moby/blob/master/profiles/seccomp/default.json) as sample.
@@ -54,7 +54,6 @@ Waiting for implementation.
    --network none
    ```
    
-
 6. CPU&Process
 
    ```bash
