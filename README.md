@@ -2,7 +2,18 @@
 
 Docker container as sandBox for running codes.
 
-Waiting for implementation.
+Waiting for implementation of **Adapter**.
+
+```bash
+docker run -it \
+    --name judger-xxx \
+    -v /path/to/code/xxx:/code/xxx \
+    --security-opt seccomp=/path/to/seccomp/default.json \
+    --network none \
+    --cpus=1 \
+    --pids-limit 30 \
+    judger-xxx
+```
 
 ## Security Features
 
@@ -83,7 +94,7 @@ Waiting for implementation.
 
 * Java
 
-  Use `Test.java` for test. Run `javac Test.java%&java Test`, and `Pass` will be in stdout if passed.
+  Use `Test.java` for test. Run `javac Test.java&&java Test`, and `Pass` will be in stdout if passed.
 
 * Python
 
