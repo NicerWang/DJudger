@@ -30,10 +30,10 @@ Waiting for implementation.
 
    > Ref:https://docs.docker.com/engine/security/seccomp/
 
-   Use seccomp security profile `seccomp/v1.json`, add options when run:
+   Use seccomp security profile `seccomp/default.json`, add options when run:
 
    ```bash
-   --security-opt seccomp=/path/to/files/seccomp/v1.json
+   --security-opt seccomp=/path/to/files/seccomp/default.json
    ```
 
    Docker provides with [default.json](https://github.com/moby/moby/blob/master/profiles/seccomp/default.json) as sample.
@@ -74,5 +74,18 @@ Waiting for implementation.
   sysctl -w user.max_user_namespaces=15000
   ```
 
-  
+
+## Languages
+
+* C++
+
+  Use `test.cpp` for test. Run `g++ test.cpp&&./a.out`, and `Pass` will be in stdout if passed.
+
+* Java
+
+  Use `Test.java` for test. Run `javac Test.java%&java Test`, and `Pass` will be in stdout if passed.
+
+* Python
+
+  Use `Test.py` for test. Run `python3 test.py`, and `Pass` will be in stdout if passed.
 
