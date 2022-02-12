@@ -1,4 +1,4 @@
-package judger.entity;
+package judger;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -8,14 +8,16 @@ import java.util.Queue;
 public class Lang {
     final LangEnum type;
     String imageName;
-    List<String> commands;
     String testCommand;
     String testResult;
+    List<String> commands;
+    List<Container> containers;
     Queue<String> taskQueue;
 
     public Lang(LangEnum type) {
         this.type = type;
         commands = new ArrayList<>();
+        containers = new ArrayList<>();
         taskQueue = new LinkedList<>();
     }
 

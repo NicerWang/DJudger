@@ -1,7 +1,5 @@
 package judger;
 
-import judger.entity.Lang;
-import judger.entity.LangEnum;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,6 +12,8 @@ public class PropertyUtil {
     static String codePath;
     static Integer timeLimit;
     static String seccompFile;
+    static Integer queuedTaskCnt;
+    static Integer maxContainer;
 
     public static void init(){
         Properties properties = new Properties();
@@ -27,6 +27,8 @@ public class PropertyUtil {
         dockerSocket = properties.getProperty("docker.socket","unix:///var/run/docker.sock");
         codePath = properties.getProperty("docker.code","~/codes");
         timeLimit = Integer.parseInt(properties.getProperty("time_limit","10"));
+        queuedTaskCnt = Integer.parseInt(properties.getProperty("queued_task_cnt","4"));
+        maxContainer = Integer.parseInt(properties.getProperty("max_container","2"));
         String seccompPath = properties.getProperty("docker.seccomp","~/seccomp/default.json");
         try {
             String str;

@@ -1,9 +1,9 @@
-package judger.entity;
+package judger;
 
 public enum LangEnum {
     Java("java"),
-    Python("python"),
-    CPP("c");
+    Python("py"),
+    CPP("c++");
 
     private final String fileSymbol;
 
