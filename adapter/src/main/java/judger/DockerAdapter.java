@@ -26,7 +26,7 @@ public class DockerAdapter {
     }
 
     public static String createContainer(Lang language){
-        Bind bind = new Bind(PropertyUtil.codePath, new Volume("/code/" + language.getType().getFileSymbol()));
+        Bind bind = new Bind(PropertyUtil.codePath + "/" +  language.getType().getFileSymbol(), new Volume("/code/" + language.getType().getFileSymbol()));
         List<String> securityOpt = new ArrayList<>();
         securityOpt.add("seccomp=" + PropertyUtil.seccompFile);
         HostConfig hostConfig = HostConfig.newHostConfig().withBinds(bind).withCpuCount(1L).withPidsLimit(30L).withAutoRemove(true).withNetworkMode("none").withSecurityOpts(securityOpt);

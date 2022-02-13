@@ -14,13 +14,11 @@ public class Lang {
     List<Container> containers;
     Queue<Task> taskQueue;
     Semaphore taskFull = new Semaphore(0);
-    Queue<Result> resultQueue;
 
     public Lang(LangEnum type) {
         this.type = type;
         containers = new ArrayList<>();
         taskQueue = new LinkedList<>();
-        resultQueue = new LinkedList<>();
     }
 
     public LangEnum getType() {
@@ -57,14 +55,6 @@ public class Lang {
 
     public void setTaskQueue(Queue<Task> taskQueue) {
         this.taskQueue = taskQueue;
-    }
-
-    public Queue<Result> getResultQueue() {
-        return resultQueue;
-    }
-
-    public void setResultQueue(Queue<Result> resultQueue) {
-        this.resultQueue = resultQueue;
     }
 
     public List<Container> getContainers() {

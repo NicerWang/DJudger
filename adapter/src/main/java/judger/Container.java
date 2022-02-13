@@ -25,13 +25,10 @@ public class Container extends Thread {
                 }
             }
             try {
-                Result result = new Result();
-                result.setResult(DockerAdapter.runCommand(cid, String.join("&&", task.getCommands())));
-                result.setInfo(task.getCodeIdentifier());
-                synchronized (lang.getResultQueue()){
-                    lang.resultQueue.offer(result);
+                synchronized (task){
+                    task.setResult(DockerAdapter.runCommand(cid, String.join("&&", task.getCommands())));
+                    task.notify();
                 }
-                lang.getResultQueue().notifyAll();
                 if (!test()) {
                     remove();
                     PropertyUtil.logger.log(Level.ERROR, "[CONT]Test for " + cid + " failed, will be removed");

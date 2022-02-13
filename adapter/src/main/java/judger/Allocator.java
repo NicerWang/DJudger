@@ -1,5 +1,6 @@
 package judger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,16 +10,19 @@ public class Allocator {
 
     public static String runCode(LangEnum langEnum, List<String> commands, String codeIdentifier, String code){
         Task task = new Task(code, codeIdentifier);
-        task.commands = commands;
+        task.commands = new ArrayList<>(commands);
         Lang target = lang.get(langEnum);
-        String filename = FileUtil.writeCode(target.getType(),task.getCodeIdentifier(),task.getCode());
+        String[] paths = FileUtil.writeCode(target.getType(),task.getCodeIdentifier(),task.getCode());
         for(int i = 0; i < task.commands.size(); i++){
-            task.commands.set(i,task.commands.get(i).replace("%(code)",filename));
+            task.commands.set(i,task.commands.get(i).replace("$(directory)",paths[0]));
+            task.commands.set(i,task.commands.get(i).replace("$(code)",paths[1]));
         }
         synchronized (target.getType()){
+            System.out.println(target.taskQueue.size());
             if(target.taskQueue.size() == 0){
                 for(int i = 0; i < target.containers.size() - 1; i++){
                     target.containers.get(i).setStopped(true);
+                    target.containers.get(i).interrupt();
                 }
             }
             target.getTaskQueue().offer(task);
@@ -27,21 +31,14 @@ public class Allocator {
                 addContainer(target);
             }
         }
-        Result result = null;
-        while (true){
-            synchronized (target.getResultQueue()){
-                try {
-                    target.getResultQueue().wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if(target.getResultQueue().element().info.equals(task.codeIdentifier)){
-                    result = target.getResultQueue().poll();
-                    break;
-                }
+        synchronized (task){
+            try {
+                task.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
-        return result.getResult();
+        return task.getResult();
     }
 
     private static void addContainer(Lang target){

@@ -7,10 +7,12 @@ public class Task {
     List<String> commands = new ArrayList<>();
     String code;
     String codeIdentifier;
+    String result;
 
     public Task(String code, String codeIdentifier) {
         this.code = code;
         this.codeIdentifier = codeIdentifier;
+        this.result = null;
     }
 
     public List<String> getCommands() {
@@ -23,5 +25,13 @@ public class Task {
 
     public String getCodeIdentifier() {
         return codeIdentifier;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }
