@@ -33,13 +33,13 @@ public class DockerAdapter {
 //        HostConfig hostConfig = HostConfig.newHostConfig().withBinds(bind).withCpuCount(1L).withPidsLimit(30L).withAutoRemove(true).withNetworkMode("none");
         CreateContainerResponse response = dockerClient.createContainerCmd(language.getImageName()).withTty(true).withHostConfig(hostConfig).withWorkingDir("/code").exec();
         dockerClient.startContainerCmd(response.getId()).exec();
-        PropertyUtil.logger.log(Level.INFO,"[CONT]Container " + response.getId() + " for " + language.getType().getFileSymbol() + " created.");
+        PropertyUtil.logger.log(Level.INFO,"[CONT]Container " + response.getId() + " for " + language.getType().getFileSymbol() + " created");
         return response.getId();
     }
 
     public static void removeContainer(Container container){
         dockerClient.stopContainerCmd(container.getCid()).exec();
-        PropertyUtil.logger.log(Level.INFO,"[CONT]Container " + container.getCid() + " removed.");
+        PropertyUtil.logger.log(Level.INFO,"[CONT]Container " + container.getCid() + " removed");
     }
 
     public static String runCommand(String id, String command) throws Exception {

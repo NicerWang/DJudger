@@ -2,42 +2,41 @@ package judger;
 
 import org.apache.logging.log4j.Level;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Container extends Thread{
+public class Container extends Thread {
     private String cid;
     private Lang lang;
     private Boolean isStopped;
-    private List<String> results;
 
     @Override
     public void run() {
         super.run();
-        String task;
-        while(true){
-            while (lang.taskQueue.isEmpty()){
-                try {
-                    lang.wait();
-                    if(isStopped){
-                        remove();
-                        PropertyUtil.logger.log(Level.ERROR,"[CONT]Test for " + cid + " failed, will be removed.");
-                        break;
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        Task task = null;
+        while (true) {
+            try {
+                lang.taskFull.acquire();
+                synchronized (lang.getType()) {
+                    task = lang.taskQueue.poll();
+                }
+            } catch (InterruptedException e) {
+                if (isStopped) {
+                    remove();
+                    PropertyUtil.logger.log(Level.ERROR, "[CONT]Container " + cid + " will be removed");
+                    return;
                 }
             }
-            synchronized (lang.getType()){
-                task = lang.taskQueue.peek();
-            }
             try {
-                 results.add(DockerAdapter.runCommand(cid,task));
-                 if(!test()){
-                     remove();
-                     PropertyUtil.logger.log(Level.ERROR,"[CONT]Test for " + cid + " failed, will be removed.");
-                     break;
-                 }
+                Result result = new Result();
+                result.setResult(DockerAdapter.runCommand(cid, String.join("&&", task.getCommands())));
+                result.setInfo(task.getCodeIdentifier());
+                synchronized (lang.getResultQueue()){
+                    lang.resultQueue.offer(result);
+                }
+                lang.getResultQueue().notifyAll();
+                if (!test()) {
+                    remove();
+                    PropertyUtil.logger.log(Level.ERROR, "[CONT]Test for " + cid + " failed, will be removed");
+                    break;
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -48,23 +47,23 @@ public class Container extends Thread{
         return DockerAdapter.runCommand(cid, lang.getTestCommand()).trim().equals(lang.getTestResult());
     }
 
-    private void remove(){
-        synchronized (lang.getType()){
-            for(int i = 0; i < lang.containers.size(); i++){
-                if(lang.containers.get(i).getCid().equals(cid)){
+    private void remove() {
+        synchronized (lang.getType()) {
+            for (int i = 0; i < lang.containers.size(); i++) {
+                if (lang.containers.get(i).getCid().equals(cid)) {
                     lang.containers.remove(i);
                     break;
                 }
             }
         }
         DockerAdapter.removeContainer(this);
+        this.interrupt();
     }
 
     public Container(String cid, Lang lang) {
         this.cid = cid;
         this.lang = lang;
         this.isStopped = false;
-        this.results = new ArrayList<>();
     }
 
     public String getCid() {

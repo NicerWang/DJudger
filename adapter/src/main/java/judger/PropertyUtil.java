@@ -57,8 +57,6 @@ public class PropertyUtil {
                 continue;
             }
             Lang newLang = new Lang(langType);
-            for(String command:properties.getProperty(prefix + "command").split(";"))
-                newLang.getCommands().add(command);
             newLang.setImageName(properties.getProperty(prefix + "image_name"));
             newLang.setTestCommand(properties.getProperty(prefix + "test_command"));
             newLang.setTestResult(properties.getProperty(prefix + "test_result"));

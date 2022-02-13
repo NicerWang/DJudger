@@ -4,21 +4,23 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.Semaphore;
 
 public class Lang {
     final LangEnum type;
     String imageName;
     String testCommand;
     String testResult;
-    List<String> commands;
     List<Container> containers;
-    Queue<String> taskQueue;
+    Queue<Task> taskQueue;
+    Semaphore taskFull = new Semaphore(0);
+    Queue<Result> resultQueue;
 
     public Lang(LangEnum type) {
         this.type = type;
-        commands = new ArrayList<>();
         containers = new ArrayList<>();
         taskQueue = new LinkedList<>();
+        resultQueue = new LinkedList<>();
     }
 
     public LangEnum getType() {
@@ -31,14 +33,6 @@ public class Lang {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
-    }
-
-    public List<String> getCommands() {
-        return commands;
-    }
-
-    public void setCommands(List<String> commands) {
-        this.commands = commands;
     }
 
     public String getTestCommand() {
@@ -57,11 +51,27 @@ public class Lang {
         this.testResult = testResult;
     }
 
-    public Queue<String> getTaskQueue() {
+    public Queue<Task> getTaskQueue() {
         return taskQueue;
     }
 
-    public void setTaskQueue(Queue<String> taskQueue) {
+    public void setTaskQueue(Queue<Task> taskQueue) {
         this.taskQueue = taskQueue;
+    }
+
+    public Queue<Result> getResultQueue() {
+        return resultQueue;
+    }
+
+    public void setResultQueue(Queue<Result> resultQueue) {
+        this.resultQueue = resultQueue;
+    }
+
+    public List<Container> getContainers() {
+        return containers;
+    }
+
+    public void setContainers(List<Container> containers) {
+        this.containers = containers;
     }
 }

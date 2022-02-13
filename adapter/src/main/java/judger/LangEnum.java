@@ -3,7 +3,7 @@ package judger;
 public enum LangEnum {
     Java("java"),
     Python("py"),
-    CPP("c++");
+    CPP("c");
 
     private final String fileSymbol;
 
