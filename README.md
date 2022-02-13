@@ -1,11 +1,62 @@
-# Judger
+# DJudger
 
 Docker container as sandBox for running codes.
 
-Waiting for implementation of **Adapter**.
+**Features:**
+
+* Nearly Safe
+* Easy to Use
+* Rapid Response and Dispatch
+* Do not prevent danger, just detect and recover
+
+### Adapter Guides
+
+0. Docker
+
+   Install Docker and see [Security Features](#Security Features) #1.
+
+1. Build images
+
+   Run in folder with `Dockerfile`.
+
+   ```bash
+   sudo docker build -t judge_xxx .
+   ```
+
+   Build all three images, record all names.(recommend `judger_java`, `judger_c`, `judger_python`, which are defaults in adapter)
+
+2. Make Folders
+
+   Need a folder to save all code for running, the folder need three subdirectories:`c`, `py`, `java`
+
+3. Add `DJudger` adapter codes in your projects, properties file explanation:
+
+   | Name               | Meaning                                    | Default                     |
+   | ------------------ | ------------------------------------------ | --------------------------- |
+   | `docker.socket`    | Docker TCP or Unix Socket Path             | unix:///var/run/docker.sock |
+   | `docker.code`      | Directory to save codes in `Step2`         | ~/codes                     |
+   | `docker.seccomp`   | Path to seccomp file                       | ~/seccomp/default.json      |
+   | `time_limit`       | Max code exec time(seconds)                | 10                          |
+   | `queued_task_cnt`  | Max queued tasks each container            | 4                           |
+   | `max_container`    | Max containers for each language           | 2                           |
+   | `xxx.support`      | Support `xxx` language                     | true                        |
+   | `xxx.image_name`   | Image for `xxx` language(Named in `Step1`) | judger_xxx                  |
+   | `xxx.test_command` | See [Languages](#languages)                |                             |
+   | `xxx.test_result`  | Specify output of test pass                | Pass                        |
+
+4. API
+
+   See Samples in `djudger.TestLauncher`
+
+   ```java
+   Allocator.init();
+   Allocator.runCode();
+   ```
+
+### Docker
 
 ```bash
-docker run -it \
+sudo docker run -it \
     --name judger-xxx \
     -v /path/to/code/xxx:/code/xxx \
     --security-opt seccomp=/path/to/seccomp/default.json \
@@ -15,7 +66,7 @@ docker run -it \
     judger-xxx
 ```
 
-## Security Features
+#### Security Features
 
 1. Map root in container to a user without privilege.
 
@@ -53,11 +104,13 @@ docker run -it \
 
    Run testcode after each run, remove and run a new container if test failed.
 
+   If container wasn't broken(test passed), it will be reused.
+
 4. Time Limit
 
    Remove and run a new container if TLE (Run or Compile) .
 
-5. Net Work
+5. Network
 
    Container should not be linked with any network, add options when run:
 
@@ -72,12 +125,7 @@ docker run -it \
    --pids-limit 30
    ```
 
-## Other Features
-
-1. Each language has a specific image, can have any number of containers.
-2. If container wasn't broken(test passed), it will be reused.
-
-## Possible Solution
+#### Possible Problem when Start
 
 * https://stackoverflow.com/questions/58592586/how-to-solve-permission-denied-when-mounting-volume-during-docker-run-command/58604483#58604483
 
@@ -86,7 +134,7 @@ docker run -it \
   ```
 
 
-## Languages
+#### Languages
 
 * C++
 
