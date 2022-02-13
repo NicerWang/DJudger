@@ -1,4 +1,4 @@
-package judger;
+package djudger.entity;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -63,5 +63,13 @@ public class Lang {
 
     public void setContainers(List<Container> containers) {
         this.containers = containers;
+    }
+
+    public Semaphore getTaskFull() {
+        return taskFull;
+    }
+
+    public void setTaskFull(Semaphore taskFull) {
+        this.taskFull = taskFull;
     }
 }

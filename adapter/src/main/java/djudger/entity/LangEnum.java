@@ -1,4 +1,4 @@
-package judger;
+package djudger.entity;
 
 public enum LangEnum {
     Java("java"),
