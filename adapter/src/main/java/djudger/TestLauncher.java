@@ -57,17 +57,17 @@ public class TestLauncher {
             Integer j = r.nextInt() % 3;
             if(j == 1){
                 for(int i = 0; i < 10; i++){
-                    new Test(javaCode,javaCommands,"" + r.nextInt(1000000), LangEnum.Java).start();
+                    new Test(javaCode,javaCommands,"" + r.nextInt(), LangEnum.Java).start();
                 }
             }
             else if(j == 2){
                 for(int i = 0; i < 10; i++){
-                    new Test(cCode,cCommands,"" + r.nextInt(1000000), LangEnum.CPP).start();
+                    new Test(cCode,cCommands,"" + r.nextInt(), LangEnum.CPP).start();
                 }
             }
             else {
                 for(int i = 0; i < 10; i++){
-                    new Test(pyCode,pyCommands,"" + r.nextInt(1000000), LangEnum.Python).start();
+                    new Test(pyCode,pyCommands,"" + r.nextInt(), LangEnum.Python).start();
                 }
             }
             Thread.sleep(1000);

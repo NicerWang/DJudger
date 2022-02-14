@@ -13,7 +13,7 @@ Docker container as sandBox for running codes.
 
 0. Docker
 
-   Install Docker and see [Security Features](#Security Features) #1.
+   Install Docker and see [Security Features](#Security-Features) #1.
 
 1. Build images
 
