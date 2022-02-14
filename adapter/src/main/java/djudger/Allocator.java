@@ -24,6 +24,8 @@ public class Allocator {
         List<Container> containers = target.getContainers();
         Queue<Task> taskQueue = target.getTaskQueue();
         String[] paths = FileUtil.writeCode(target.getType(), task.getCodeIdentifier(), task.getCode());
+        task.setRemotePath(paths[0].substring(0,paths[0].lastIndexOf("/") + 1));
+        task.setHostPath(paths[2]);
         for (int i = 0; i < task.getCommands().size(); i++) {
             commands.set(i, commands.get(i).replace("$(directory)", paths[0]));
             commands.set(i, commands.get(i).replace("$(code)", paths[1]));

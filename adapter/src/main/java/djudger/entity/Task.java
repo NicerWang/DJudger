@@ -8,6 +8,8 @@ public class Task {
     String code;
     String codeIdentifier;
     String result;
+    String hostPath;
+    String remotePath;
 
     public Task(String code, String codeIdentifier) {
         this.code = code;
@@ -45,5 +47,21 @@ public class Task {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public String getHostPath() {
+        return hostPath;
+    }
+
+    public void setHostPath(String hostPath) {
+        this.hostPath = hostPath;
+    }
+
+    public String getRemotePath() {
+        return remotePath;
+    }
+
+    public void setRemotePath(String remotePath) {
+        this.remotePath = remotePath;
     }
 }

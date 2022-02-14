@@ -10,11 +10,12 @@ import java.nio.charset.StandardCharsets;
 
 public class FileUtil {
     public static String[] writeCode(LangEnum lang, String fileName, String code) {
+        File directory = null;
         File file = null;
         String containerPath = null;
         String filePath = null;
         try {
-            File directory = new File(new File(PropertyUtil.codePath, lang.getFileSymbol()), fileName);
+            directory = new File(new File(PropertyUtil.codePath, lang.getFileSymbol()), fileName);
             containerPath = "/code/" + lang.getFileSymbol() + "/" + fileName;
             if (!directory.mkdir()) {
                 PropertyUtil.logger.log(Level.ERROR, "[FILE]Father directory already exists, check same identifier");
@@ -37,6 +38,7 @@ public class FileUtil {
             e.printStackTrace();
             return null;
         }
-        return new String[]{containerPath, filePath};
+
+        return new String[]{containerPath, filePath, directory.getAbsolutePath()};
     }
 }

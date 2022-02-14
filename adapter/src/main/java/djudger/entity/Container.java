@@ -29,23 +29,24 @@ public class Container extends Thread {
                     return;
                 }
             }
+            DockerAdapter.copyFile(this,task.getHostPath(),task.getRemotePath());
+            String result;
             try {
-                String result;
-                try {
-                    result = DockerAdapter.runCommand(cid, String.join("&&", task.getCommands()));
-                } catch (Exception e) {
-                    synchronized (task) {
-                        task.setResult(null);
-                        task.notify();
-                    }
-                    remove();
-                    PropertyUtil.logger.log(Level.ERROR, "[CONT]" + cid + " removed as run error");
-                    return;
-                }
+                result = DockerAdapter.runCommand(cid, String.join("&&", task.getCommands()));
+            } catch (Exception e) {
                 synchronized (task) {
-                    task.setResult(result);
+                    task.setResult(null);
                     task.notify();
                 }
+                remove();
+                PropertyUtil.logger.log(Level.ERROR, "[CONT]" + cid + " removed as run error");
+                return;
+            }
+            synchronized (task) {
+                task.setResult(result);
+                task.notify();
+            }
+            try {
                 if (!test()) {
                     remove();
                     PropertyUtil.logger.log(Level.ERROR, "[CONT]" + cid + " removed as run error");

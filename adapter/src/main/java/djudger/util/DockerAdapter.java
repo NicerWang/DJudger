@@ -29,11 +29,10 @@ public class DockerAdapter {
     }
 
     public static String createContainer(Lang language) {
-        Bind bind = new Bind(PropertyUtil.codePath + "/" + language.getType().getFileSymbol(), new Volume("/code/" + language.getType().getFileSymbol()));
         List<String> securityOpt = new ArrayList<>();
         securityOpt.add("seccomp=" + PropertyUtil.seccompFile);
 //        HostConfig hostConfig = HostConfig.newHostConfig().withBinds(bind).withCpuCount(1L).withPidsLimit(30L).withAutoRemove(true).withNetworkMode("none").withSecurityOpts(securityOpt);
-        HostConfig hostConfig = HostConfig.newHostConfig().withBinds(bind).withCpuCount(1L).withPidsLimit(30L).withAutoRemove(true).withNetworkMode("none");
+        HostConfig hostConfig = HostConfig.newHostConfig().withCpuCount(1L).withPidsLimit(30L).withAutoRemove(true).withNetworkMode("none");
         CreateContainerResponse response = dockerClient.createContainerCmd(language.getImageName()).withTty(true).withHostConfig(hostConfig).withWorkingDir("/code").exec();
         dockerClient.startContainerCmd(response.getId()).exec();
         PropertyUtil.logger.log(Level.INFO, "[DOCKER]Container " + response.getId() + " for " + language.getType().getFileSymbol() + " created");
@@ -41,7 +40,7 @@ public class DockerAdapter {
     }
 
     public static void removeContainer(Container container) {
-        dockerClient.stopContainerCmd(container.getCid()).exec();
+        dockerClient.killContainerCmd(container.getCid()).exec();
         PropertyUtil.logger.log(Level.INFO, "[DOCKER]Container " + container.getCid() + " removed");
     }
 
@@ -58,5 +57,9 @@ public class DockerAdapter {
             throw new Exception("error:" + stdout.toString(), e);
         }
         return stdout.toString();
+    }
+
+    public static void copyFile(Container container, String hostPath, String remotePath){
+        dockerClient.copyArchiveToContainerCmd(container.getCid()).withHostResource(hostPath).withRemotePath(remotePath).exec();
     }
 }
