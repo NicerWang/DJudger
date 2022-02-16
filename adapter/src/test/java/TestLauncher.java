@@ -1,6 +1,4 @@
-package djudger;
-
-
+import djudger.Allocator;
 import djudger.entity.LangEnum;
 
 import java.util.ArrayList;

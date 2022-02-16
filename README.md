@@ -53,6 +53,22 @@ Docker container as sandBox for running codes.
    Allocator.runCode();
    ```
 
+5. [Optional]Use Maven & Jar
+
+   1. Move `adapter-$(version).jar` and `adapter-$(version).pom` in release folder to `~/.m2/repository/nicer/djudger/adapter/$(version)`
+
+   2. Add dependency in `pom.xml`
+
+      ```xml
+      <dependency>
+      	<groupId>nicer.djudger</groupId>
+      	<artifactId>adapter</artifactId>
+      	<version>$(version)</version>
+      </dependency>
+      ```
+
+   3. Run Sync
+
 ### Docker
 
 ```bash
