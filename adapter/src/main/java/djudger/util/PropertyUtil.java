@@ -28,11 +28,11 @@ public class PropertyUtil {
             e.printStackTrace();
         }
         dockerSocket = properties.getProperty("docker.socket", "unix:///var/run/docker.sock");
-        codePath = properties.getProperty("docker.code", "~/codes");
+        codePath = properties.getProperty("docker.code", "/root/codes");
         timeLimit = Integer.parseInt(properties.getProperty("time_limit", "10"));
         queuedTaskCnt = Integer.parseInt(properties.getProperty("queued_task_cnt", "4"));
         maxContainer = Integer.parseInt(properties.getProperty("max_container", "2"));
-        String seccompPath = properties.getProperty("docker.seccomp", "~/seccomp/default.json");
+        String seccompPath = properties.getProperty("docker.seccomp", "/root/seccomp/default.json");
         try {
             String str;
             StringBuilder stringBuilder = new StringBuilder();

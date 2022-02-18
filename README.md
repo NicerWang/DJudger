@@ -34,8 +34,8 @@ Docker container as sandBox for running codes.
    | Name               | Meaning                                    | Default                     |
    | ------------------ | ------------------------------------------ | --------------------------- |
    | `docker.socket`    | Docker TCP or Unix Socket Path             | unix:///var/run/docker.sock |
-   | `docker.code`      | Directory to save codes in `Step2`         | ~/codes                     |
-   | `docker.seccomp`   | Path to seccomp file                       | ~/seccomp/default.json      |
+   | `docker.code`      | Directory to save codes in `Step2`         | /root/codes                 |
+   | `docker.seccomp`   | Path to seccomp file                       | /root/seccomp/default.json  |
    | `time_limit`       | Max code exec time(seconds)                | 10                          |
    | `queued_task_cnt`  | Max queued tasks each container            | 4                           |
    | `max_container`    | Max containers for each language           | 2                           |
