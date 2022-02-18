@@ -2,9 +2,7 @@ package djudger.util;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerResponse;
-import com.github.dockerjava.api.model.Bind;
 import com.github.dockerjava.api.model.HostConfig;
-import com.github.dockerjava.api.model.Volume;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.core.DockerClientConfig;
@@ -31,8 +29,7 @@ public class DockerAdapter {
     public static String createContainer(Lang language) {
         List<String> securityOpt = new ArrayList<>();
         securityOpt.add("seccomp=" + PropertyUtil.seccompFile);
-//        HostConfig hostConfig = HostConfig.newHostConfig().withBinds(bind).withCpuCount(1L).withPidsLimit(30L).withAutoRemove(true).withNetworkMode("none").withSecurityOpts(securityOpt);
-        HostConfig hostConfig = HostConfig.newHostConfig().withCpuCount(1L).withPidsLimit(30L).withAutoRemove(true).withNetworkMode("none");
+        HostConfig hostConfig = HostConfig.newHostConfig().withCpuCount(1L).withPidsLimit(30L).withAutoRemove(true).withNetworkMode("none").withSecurityOpts(securityOpt);
         CreateContainerResponse response = dockerClient.createContainerCmd(language.getImageName()).withTty(true).withHostConfig(hostConfig).withWorkingDir("/code").exec();
         dockerClient.startContainerCmd(response.getId()).exec();
         PropertyUtil.logger.log(Level.INFO, "[DOCKER]Container " + response.getId() + " for " + language.getType().getFileSymbol() + " created");
