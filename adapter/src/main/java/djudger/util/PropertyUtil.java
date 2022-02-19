@@ -17,6 +17,7 @@ public class PropertyUtil {
     public static String seccompFile;
     public static Integer queuedTaskCnt;
     public static Integer maxContainer;
+    public static Integer collectTime;
 
     public static void init() {
         Properties properties = new Properties();
@@ -32,6 +33,7 @@ public class PropertyUtil {
         timeLimit = Integer.parseInt(properties.getProperty("time_limit", "10"));
         queuedTaskCnt = Integer.parseInt(properties.getProperty("queued_task_cnt", "4"));
         maxContainer = Integer.parseInt(properties.getProperty("max_container", "2"));
+        collectTime = Integer.parseInt(properties.getProperty("collect_time", "1800"));
         String seccompPath = properties.getProperty("docker.seccomp", "/root/seccomp/default.json");
         try {
             String str;
