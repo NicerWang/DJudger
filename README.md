@@ -31,22 +31,24 @@ Docker container as sandBox for running codes.
 
 3. Add `DJudger` adapter codes in your projects, properties file explanation:
 
-   | Name               | Meaning                                    | Default                     |
-   | ------------------ | ------------------------------------------ | --------------------------- |
-   | `docker.socket`    | Docker TCP or Unix Socket Path             | unix:///var/run/docker.sock |
-   | `docker.code`      | Directory to save codes in `Step2`         | /root/codes                 |
-   | `docker.seccomp`   | Path to seccomp file                       | /root/seccomp/default.json  |
-   | `time_limit`       | Max code exec time(seconds)                | 10                          |
-   | `queued_task_cnt`  | Max queued tasks each container            | 4                           |
-   | `max_container`    | Max containers for each language           | 2                           |
-   | `xxx.support`      | Support `xxx` language                     | true                        |
-   | `xxx.image_name`   | Image for `xxx` language(Named in `Step1`) | judger_xxx                  |
-   | `xxx.test_command` | See [Languages](#languages)                |                             |
-   | `xxx.test_result`  | Specify output of test pass                | Pass                        |
+   | Name                    | Meaning                                             | Default                     |
+   | ----------------------- | --------------------------------------------------- | --------------------------- |
+   | `docker.socket`         | Docker TCP or Unix Socket Path                      | unix:///var/run/docker.sock |
+   | `docker.code`           | Directory to save codes in `Step2`                  | /root/codes                 |
+   | `docker.seccomp.enable` | Enable seccomp feature                              | true                        |
+   | `docker.seccomp.path`   | Path to seccomp file                                | /root/seccomp/default.json  |
+   | `time_limit`            | Max code exec time(seconds)                         | 10                          |
+   | `queued_task_cnt`       | Max queued tasks each container                     | 4                           |
+   | `max_container`         | Max containers for each language                    | 2                           |
+   | `collect_time`          | Time interval to remove useless containers(seconds) | 1800                        |
+   | `xxx.support`           | Support `xxx` language                              | true                        |
+   | `xxx.image_name`        | Image for `xxx` language(Named in `Step1`)          | judger_xxx                  |
+   | `xxx.test_command`      | See [Languages](#languages)                         |                             |
+   | `xxx.test_result`       | Specify output of test pass                         | Pass                        |
 
 4. API
 
-   See Samples in `djudger.TestLauncher`
+   See Samples in `TestLauncher.java`
 
    ```java
    Allocator.init();

@@ -14,6 +14,7 @@ public class PropertyUtil {
     public static String dockerSocket;
     public static String codePath;
     public static Integer timeLimit;
+    public static Boolean seccomp;
     public static String seccompFile;
     public static Integer queuedTaskCnt;
     public static Integer maxContainer;
@@ -34,21 +35,24 @@ public class PropertyUtil {
         queuedTaskCnt = Integer.parseInt(properties.getProperty("queued_task_cnt", "4"));
         maxContainer = Integer.parseInt(properties.getProperty("max_container", "2"));
         collectTime = Integer.parseInt(properties.getProperty("collect_time", "1800"));
-        String seccompPath = properties.getProperty("docker.seccomp", "/root/seccomp/default.json");
-        try {
-            String str;
-            StringBuilder stringBuilder = new StringBuilder();
-            BufferedReader br = new BufferedReader(new FileReader(seccompPath));
-            while ((str = br.readLine()) != null) {
-                stringBuilder.append(str);
+        seccomp = Boolean.parseBoolean(properties.getProperty("docker.seccomp.enable", "true"));
+        if(seccomp){
+            String seccompPath = properties.getProperty("docker.seccomp.path", "/root/seccomp/default.json");
+            try {
+                String str;
+                StringBuilder stringBuilder = new StringBuilder();
+                BufferedReader br = new BufferedReader(new FileReader(seccompPath));
+                while ((str = br.readLine()) != null) {
+                    stringBuilder.append(str);
+                }
+                seccompFile = stringBuilder.toString();
+            } catch (FileNotFoundException e) {
+                logger.error("[CONF]seccomp file not found.");
+                e.printStackTrace();
+            } catch (IOException e) {
+                logger.error("[CONF]seccomp file read error.");
+                e.printStackTrace();
             }
-            seccompFile = stringBuilder.toString();
-        } catch (FileNotFoundException e) {
-            logger.error("[CONF]seccomp file not found.");
-            e.printStackTrace();
-        } catch (IOException e) {
-            logger.error("[CONF]seccomp file read error.");
-            e.printStackTrace();
         }
         initLang(properties);
         logger.info("[CONF]configuration imported.");

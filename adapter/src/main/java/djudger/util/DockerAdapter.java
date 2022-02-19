@@ -27,9 +27,13 @@ public class DockerAdapter {
     }
 
     public static String createContainer(Lang language) {
-        List<String> securityOpt = new ArrayList<>();
-        securityOpt.add("seccomp=" + PropertyUtil.seccompFile);
-        HostConfig hostConfig = HostConfig.newHostConfig().withCpuCount(1L).withPidsLimit(30L).withAutoRemove(true).withNetworkMode("none").withSecurityOpts(securityOpt);
+        HostConfig hostConfig;
+        if(PropertyUtil.seccomp){
+            List<String> securityOpt = new ArrayList<>();
+            securityOpt.add("seccomp=" + PropertyUtil.seccompFile);
+            hostConfig = HostConfig.newHostConfig().withCpuCount(1L).withPidsLimit(30L).withAutoRemove(true).withNetworkMode("none").withSecurityOpts(securityOpt);
+        }
+        else hostConfig = HostConfig.newHostConfig().withCpuCount(1L).withPidsLimit(30L).withAutoRemove(true).withNetworkMode("none");
         CreateContainerResponse response = dockerClient.createContainerCmd(language.getImageName()).withTty(true).withHostConfig(hostConfig).withWorkingDir("/code").exec();
         dockerClient.startContainerCmd(response.getId()).exec();
         PropertyUtil.logger.log(Level.INFO, "[DOCKER]Container " + response.getId() + " for " + language.getType().getFileSymbol() + " created");
