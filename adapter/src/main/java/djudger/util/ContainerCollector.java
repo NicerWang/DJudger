@@ -21,6 +21,7 @@ public class ContainerCollector extends Thread{
             PropertyUtil.logger.log(Level.ERROR,"[GC]detect useless containers");
             for(LangEnum langEnum: LangEnum.values()){
                 Lang lang = Allocator.lang.get(langEnum);
+                if(lang == null) continue;
                 List<Container> containers = lang.getContainers();
                 synchronized (lang.getType()) {
                     if (lang.getTaskQueue().size() == 0) {
