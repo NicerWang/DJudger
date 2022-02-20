@@ -7,14 +7,16 @@ public class Task {
     List<String> commands = new ArrayList<>();
     String code;
     String codeIdentifier;
-    String result;
+    String stdout;
+    String stderr;
     String hostPath;
     String remotePath;
 
     public Task(String code, String codeIdentifier) {
         this.code = code;
         this.codeIdentifier = codeIdentifier;
-        this.result = null;
+        this.stderr = null;
+        this.stdout = null;
     }
 
     public List<String> getCommands() {
@@ -41,12 +43,20 @@ public class Task {
         this.codeIdentifier = codeIdentifier;
     }
 
-    public String getResult() {
-        return result;
+    public String getStdout() {
+        return stdout;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setStdout(String stdout) {
+        this.stdout = stdout;
+    }
+
+    public String getStderr() {
+        return stderr;
+    }
+
+    public void setStderr(String stderr) {
+        this.stderr = stderr;
     }
 
     public String getHostPath() {

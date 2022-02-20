@@ -15,7 +15,7 @@ public class Allocator {
     public static Map<LangEnum, Lang> lang = new HashMap<>();
     static boolean stopped;
 
-    public static String runCode(LangEnum langEnum, List<String> commands, String codeIdentifier, String code) {
+    public static String[] runCode(LangEnum langEnum, List<String> commands, String codeIdentifier, String code) {
         if (stopped) return null;
         Task task = new Task(code, codeIdentifier);
         commands = new ArrayList<>(commands);
@@ -44,7 +44,7 @@ public class Allocator {
                 e.printStackTrace();
             }
         }
-        return task.getResult();
+        return new String[]{task.getStdout(),task.getStderr()};
     }
 
     private static void addContainer(Lang target) {

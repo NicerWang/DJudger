@@ -30,12 +30,11 @@ public class Container extends Thread {
                 }
             }
             DockerAdapter.copyFile(this,task.getHostPath(),task.getRemotePath());
-            String result;
+            String[] std;
             try {
-                result = DockerAdapter.runCommand(cid, String.join("&&", task.getCommands()));
+                std = DockerAdapter.runCommand(cid, String.join("&&", task.getCommands()));
             } catch (Exception e) {
                 synchronized (task) {
-                    task.setResult(null);
                     task.notify();
                 }
                 remove();
@@ -43,7 +42,8 @@ public class Container extends Thread {
                 return;
             }
             synchronized (task) {
-                task.setResult(result);
+                task.setStdout(std[0]);
+                task.setStderr(std[1]);
                 task.notify();
             }
             try {
@@ -59,7 +59,7 @@ public class Container extends Thread {
     }
 
     private boolean test() throws Exception {
-        return DockerAdapter.runCommand(cid, lang.getTestCommand()).trim().equals(lang.getTestResult());
+        return DockerAdapter.runCommand(cid, lang.getTestCommand())[0].trim().equals(lang.getTestResult());
     }
 
     private void remove() {

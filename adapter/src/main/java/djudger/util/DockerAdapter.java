@@ -45,19 +45,20 @@ public class DockerAdapter {
         PropertyUtil.logger.log(Level.INFO, "[DOCKER]Container " + container.getCid() + " removed");
     }
 
-    public static String runCommand(String id, String command) throws Exception {
+    public static String[] runCommand(String id, String command) throws Exception {
         OutputStream stdout = new ByteArrayOutputStream();
+        OutputStream stderr = new ByteArrayOutputStream();
         PropertyUtil.logger.log(Level.INFO, "[DOCKER]Run command " + command + " in " + id);
         try {
             dockerClient
                     .execStartCmd(dockerClient.execCreateCmd(id).withAttachStdout(true).withAttachStderr(true).withCmd(new String[]{"/bin/bash", "-c", command}).exec().getId())
-                    .exec(new ExecStartResultCallback(stdout, stdout))
+                    .exec(new ExecStartResultCallback(stdout,stderr))
                     .awaitCompletion(PropertyUtil.timeLimit, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             PropertyUtil.logger.log(Level.ERROR, "[DOCKER]Run Error in " + id);
             throw new Exception("error:" + stdout.toString(), e);
         }
-        return stdout.toString();
+        return new String[]{stdout.toString(),stderr.toString()};
     }
 
     public static void copyFile(Container container, String hostPath, String remotePath){

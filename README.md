@@ -52,7 +52,11 @@ Docker container as sandBox for running codes.
 
    ```java
    Allocator.init();
-   Allocator.runCode();
+   String[] result = Allocator.runCode();
+   /*
+   	result[0] is stdout
+   	result[1] is stderr
+   */
    ```
 
 5. [Optional]Use Maven & Jar
@@ -70,6 +74,12 @@ Docker container as sandBox for running codes.
       ```
 
    3. Run Sync
+
+### Bug Fix
+
+* `#include</dev/random>` in `v0.3.0`
+
+  Compiler will stop itself, you can manage that by customize commands.
 
 ### Docker
 
