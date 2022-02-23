@@ -49,14 +49,19 @@ public class DockerAdapter {
         OutputStream stdout = new ByteArrayOutputStream();
         OutputStream stderr = new ByteArrayOutputStream();
         PropertyUtil.logger.log(Level.INFO, "[DOCKER]Run command " + command + " in " + id);
+        boolean completion;
         try {
-            dockerClient
+            completion = dockerClient
                     .execStartCmd(dockerClient.execCreateCmd(id).withAttachStdout(true).withAttachStderr(true).withCmd(new String[]{"/bin/bash", "-c", command}).exec().getId())
-                    .exec(new ExecStartResultCallback(stdout,stderr))
+                    .exec(new ExecStartResultCallback(stdout, stderr))
                     .awaitCompletion(PropertyUtil.timeLimit, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             PropertyUtil.logger.log(Level.ERROR, "[DOCKER]Run Error in " + id);
             throw new Exception("error:" + stdout.toString(), e);
+        }
+        if(!completion){
+            PropertyUtil.logger.log(Level.WARN, "[DOCKER]Run TimeOut in " + id);
+            throw new Exception();
         }
         return new String[]{stdout.toString(),stderr.toString()};
     }
