@@ -9,11 +9,15 @@ Docker container as sandBox for running codes.
 * Rapid Response and Dispatch
 * Do not prevent danger, just detect and recover
 
-### Adapter Guides
+> If you want to use DJudger as **OJ code runner**, you can use `|` to deal with stdin, current version does not support to redirect stdin, I will fix it later.
+
+## Adapter Use Guides
+
+> I used DJudger in [nkcsavp_backend](https://github.com/nkcsavp/backend), which is a good sample of using adapter.
 
 0. Docker
 
-   Install Docker and see [Security Features](#Security-Features) #1.
+    Install Docker and see [Security Features](#Security-Features) #1 and #2.
 
 1. Build images
 
@@ -56,45 +60,50 @@ Docker container as sandBox for running codes.
    /*
    	result[0] is stdout
    	result[1] is stderr
+   	$(directory) stands for code directory
+   	$(filename) stands for the code file
    */
    ```
 
-5. [Optional]Use Maven & Jar
+5. Use Maven & Jar
 
-   1. Move `adapter-$(version).jar` and `adapter-$(version).pom` in release folder to `~/.m2/repository/nicer/djudger/adapter/$(version)`
+   1. Move `adapter-$(version).jar` into `lib` folder of classpath.
 
    2. Add dependency in `pom.xml`
 
       ```xml
       <dependency>
-      	<groupId>nicer.djudger</groupId>
-      	<artifactId>adapter</artifactId>
-      	<version>$(version)</version>
+        <groupId>nicer.djudger</groupId>
+        <artifactId>adapter</artifactId>
+        <version>$(version)</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/adapter-$(version).jar</systemPath>
       </dependency>
       ```
 
    3. Run Sync
 
-### Bug Fix
+6. Languages Support
+
+   * C++
+
+     Use `test.cpp` for test. Run `g++ test.cpp&&./a.out`, and `Pass` will be in stdout if passed.
+
+   * Java
+
+     Use `Test.java` for test. Run `javac Test.java&&java Test`, and `Pass` will be in stdout if passed.
+
+   * Python
+
+     Use `Test.py` for test. Run `python3 test.py`, and `Pass` will be in stdout if passed.****
+
+## Update Log
 
 * `#include</dev/random>` in `v0.3.0`
 
   Compiler will stop itself, you can manage that by customize commands.
 
-### Docker
-
-```bash
-sudo docker run -it \
-    --name judger-xxx \
-    -v /path/to/code/xxx:/code/xxx \
-    --security-opt seccomp=/path/to/seccomp/default.json \
-    --network none \
-    --cpus=1 \
-    --pids-limit 30 \
-    judger-xxx
-```
-
-#### Security Features
+## Security Features
 
 1. Map root in container to a user without privilege.
 
@@ -153,7 +162,20 @@ sudo docker run -it \
    --pids-limit 30
    ```
 
-#### Possible Problem when Start
+> coresponding docker command:
+>
+> ```shell
+> sudo docker run -it \
+>     --name judger-xxx \
+>     -v /path/to/code/xxx:/code/xxx \
+>     --security-opt seccomp=/path/to/seccomp/default.json \
+>     --network none \
+>     --cpus=1 \
+>     --pids-limit 30 \
+>     judger-xxx
+> ```
+
+## Possible Problem when Starting
 
 * https://stackoverflow.com/questions/58592586/how-to-solve-permission-denied-when-mounting-volume-during-docker-run-command/58604483#58604483
 
@@ -161,18 +183,4 @@ sudo docker run -it \
   sysctl -w user.max_user_namespaces=15000
   ```
 
-
-#### Languages
-
-* C++
-
-  Use `test.cpp` for test. Run `g++ test.cpp&&./a.out`, and `Pass` will be in stdout if passed.
-
-* Java
-
-  Use `Test.java` for test. Run `javac Test.java&&java Test`, and `Pass` will be in stdout if passed.
-
-* Python
-
-  Use `Test.py` for test. Run `python3 test.py`, and `Pass` will be in stdout if passed.
-
+* If you need to use docker for other applications, you need open other containers as host, see docker docs of usern.
