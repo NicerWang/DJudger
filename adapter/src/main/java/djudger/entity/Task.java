@@ -1,5 +1,7 @@
 package djudger.entity;
 
+import djudger.StatusEnum;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +13,12 @@ public class Task {
     String stderr;
     String hostPath;
     String remotePath;
+    StatusEnum status;
 
     public Task(String code, String codeIdentifier) {
         this.code = code;
         this.codeIdentifier = codeIdentifier;
-        this.stderr = null;
-        this.stdout = null;
+        this.status = StatusEnum.PENDING;
     }
 
     public List<String> getCommands() {
@@ -73,5 +75,27 @@ public class Task {
 
     public void setRemotePath(String remotePath) {
         this.remotePath = remotePath;
+    }
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "commands=" + commands +
+                ", code='" + code + '\'' +
+                ", codeIdentifier='" + codeIdentifier + '\'' +
+                ", stdout='" + stdout + '\'' +
+                ", stderr='" + stderr + '\'' +
+                ", hostPath='" + hostPath + '\'' +
+                ", remotePath='" + remotePath + '\'' +
+                ", status=" + status +
+                '}';
     }
 }
