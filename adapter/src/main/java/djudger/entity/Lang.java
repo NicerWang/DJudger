@@ -1,24 +1,27 @@
 package djudger.entity;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.Semaphore;
+import djudger.Container;
+import djudger.LangEnum;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Lang {
     final LangEnum type;
     String imageName;
     String testCommand;
     String testResult;
-    List<Container> containers;
-    Queue<Task> taskQueue;
-    Semaphore taskFull = new Semaphore(0);
+    Map<String, Container> containers;
+    BlockingQueue<Task> taskQueue;
+    volatile Integer containerCnt = 0;
 
     public Lang(LangEnum type) {
         this.type = type;
-        containers = new ArrayList<>();
-        taskQueue = new LinkedList<>();
+        containers = new HashMap<>();
+        taskQueue = new LinkedBlockingQueue<>();
     }
 
     public LangEnum getType() {
@@ -49,27 +52,27 @@ public class Lang {
         this.testResult = testResult;
     }
 
-    public Queue<Task> getTaskQueue() {
-        return taskQueue;
-    }
-
-    public void setTaskQueue(Queue<Task> taskQueue) {
-        this.taskQueue = taskQueue;
-    }
-
-    public List<Container> getContainers() {
+    public Map<String, Container> getContainers() {
         return containers;
     }
 
-    public void setContainers(List<Container> containers) {
+    public void setContainers(Map<String, Container> containers) {
         this.containers = containers;
     }
 
-    public Semaphore getTaskFull() {
-        return taskFull;
+    public BlockingQueue<Task> getTaskQueue() {
+        return taskQueue;
     }
 
-    public void setTaskFull(Semaphore taskFull) {
-        this.taskFull = taskFull;
+    public void setTaskQueue(BlockingQueue<Task> taskQueue) {
+        this.taskQueue = taskQueue;
+    }
+
+    public Integer getContainerCnt() {
+        return containerCnt;
+    }
+
+    public void setContainerCnt(Integer containerCnt) {
+        this.containerCnt = containerCnt;
     }
 }

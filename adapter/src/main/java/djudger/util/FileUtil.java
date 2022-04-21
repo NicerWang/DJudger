@@ -1,6 +1,6 @@
 package djudger.util;
 
-import djudger.entity.LangEnum;
+import djudger.LangEnum;
 import org.apache.logging.log4j.Level;
 
 import java.io.File;

@@ -2,7 +2,7 @@ package djudger.util;
 
 import djudger.Allocator;
 import djudger.entity.Lang;
-import djudger.entity.LangEnum;
+import djudger.LangEnum;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

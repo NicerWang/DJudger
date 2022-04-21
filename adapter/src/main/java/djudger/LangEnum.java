@@ -1,4 +1,4 @@
-package djudger.entity;
+package djudger;
 
 public enum LangEnum {
     Java("java"),
