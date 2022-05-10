@@ -1,0 +1,15 @@
+name: Docs Deploy
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.3.4
+
+    - name: Vuepress Deploy
+      uses: jenkey2011/vuepress-deploy@v1.8.1
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BUILD_SCRIPT: cd doc && yarn && yarn build
+        BUILD_DIR: docs/.vuepress/dist/

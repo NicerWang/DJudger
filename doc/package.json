@@ -1,0 +1,25 @@
+{
+  "name": "djudger-docs",
+  "version": "1.0.0",
+  "description": "Docs of DJudger",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NicerWang/DJudger.git"
+  },
+  "author": "NicerWang",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/NicerWang/DJudger/issues"
+  },
+  "homepage": "https://github.com/NicerWang/DJudger",
+  "devDependencies": {
+    "moment": "^2.29.1",
+    "vuepress": "^1.8.2",
+    "vuepress-plugin-auto-sidebar": "^2.3.2"
+  }
+}
