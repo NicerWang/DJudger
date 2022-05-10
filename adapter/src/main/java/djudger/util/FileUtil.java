@@ -1,44 +1,17 @@
 package djudger.util;
 
-import djudger.LangEnum;
-import org.apache.logging.log4j.Level;
-
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-
 public class FileUtil {
-    public static String[] writeCode(LangEnum lang, String fileName, String code) {
-        File directory = null;
-        File file = null;
-        String containerPath = null;
-        String filePath = null;
-        try {
-            directory = new File(new File(PropertyUtil.codePath, lang.getFileSymbol()), fileName);
-            containerPath = "/code/" + lang.getFileSymbol() + "/" + fileName;
-            if (!directory.mkdir()) {
-                PropertyUtil.logger.log(Level.ERROR, "[FILE]Father directory already exists, check same identifier");
-            }
-            if (lang == LangEnum.CPP) {
-                file = new File(directory, "main.cpp");
-                filePath = containerPath + "/main.cpp";
-            } else if (lang == LangEnum.Java) {
-                file = new File(directory, "Main.java");
-                filePath = containerPath + "/Main.java";
-            } else if (lang == LangEnum.Python) {
-                file = new File(directory, "main.py");
-                filePath = containerPath + "/main.py";
-            }
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(code.getBytes(StandardCharsets.UTF_8));
-            fos.close();
-        } catch (Exception e) {
-            PropertyUtil.logger.log(Level.ERROR, "[FILE]File write error");
-            e.printStackTrace();
-            return null;
+    public static void writeCode(String directory, String fileName, String code) throws IOException {
+        if (!new File(directory).mkdir()) {
+            LogUtil.logger.error("[FILE]Directory Already Exists(Possibly Caused by Same Identifier)");
         }
-
-        return new String[]{containerPath, filePath, directory.getAbsolutePath()};
+        FileOutputStream fos = new FileOutputStream(fileName);
+        fos.write(code.getBytes(StandardCharsets.UTF_8));
+        fos.close();
     }
 }

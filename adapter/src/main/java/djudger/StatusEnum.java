@@ -8,7 +8,7 @@ public enum StatusEnum {
 
     private final String describe;
 
-    StatusEnum(String describe){
+    StatusEnum(String describe) {
         this.describe = describe;
     }
 

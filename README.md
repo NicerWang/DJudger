@@ -1,5 +1,7 @@
 # DJudger
 
+DJudger v1.0 docs is on the way.
+
 Docker container as sandbox for running codes.
 
 欢迎阅读：[中文版README](./README_zh_CN.md)

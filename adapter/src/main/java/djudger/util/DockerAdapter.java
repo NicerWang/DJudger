@@ -7,11 +7,9 @@ import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.core.DockerClientConfig;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
-import djudger.Container;
+import djudger.Config;
+import djudger.DJudgerException;
 import djudger.StatusEnum;
-import djudger.entity.DockerException;
-import djudger.entity.Lang;
-import org.apache.logging.log4j.Level;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
@@ -21,54 +19,56 @@ import java.util.concurrent.TimeUnit;
 
 public class DockerAdapter {
 
-    public static DockerClient dockerClient;
+    public final DockerClient dockerClient;
+    public final Config config;
 
-    public static void init() {
-        DockerClientConfig dockerClientConfig = DefaultDockerClientConfig.createDefaultConfigBuilder().withDockerHost(PropertyUtil.dockerSocket).build();
+    public DockerAdapter(Config config) {
+        this.config = config;
+        DockerClientConfig dockerClientConfig = DefaultDockerClientConfig.createDefaultConfigBuilder().withDockerHost(config.dockerSocket).build();
         dockerClient = DockerClientBuilder.getInstance(dockerClientConfig).build();
     }
 
-    public static String createContainer(Lang language) {
+    public String createContainer(String imageName, String type) {
         HostConfig hostConfig;
-        if(PropertyUtil.seccomp){
+        if (config.seccomp) {
             List<String> securityOpt = new ArrayList<>();
-            securityOpt.add("seccomp=" + PropertyUtil.seccompFile);
+            securityOpt.add("seccomp=" + config.seccompPath);
             hostConfig = HostConfig.newHostConfig().withCpuCount(1L).withPidsLimit(30L).withAutoRemove(true).withNetworkMode("none").withSecurityOpts(securityOpt);
-        }
-        else hostConfig = HostConfig.newHostConfig().withCpuCount(1L).withPidsLimit(30L).withAutoRemove(true).withNetworkMode("none");
-        CreateContainerResponse response = dockerClient.createContainerCmd(language.getImageName()).withTty(true).withHostConfig(hostConfig).withWorkingDir("/code").exec();
+        } else
+            hostConfig = HostConfig.newHostConfig().withCpuCount(1L).withPidsLimit(30L).withAutoRemove(true).withNetworkMode("none");
+        CreateContainerResponse response = dockerClient.createContainerCmd(imageName).withTty(true).withHostConfig(hostConfig).withWorkingDir("/code").exec();
         dockerClient.startContainerCmd(response.getId()).exec();
-        PropertyUtil.logger.log(Level.INFO, "[Docker]Container " + response.getId() + " for " + language.getType().getFileSymbol() + " created");
+        LogUtil.logger.info("[ADAPTER]Container {} for {} created", response.getId().substring(0, 8), type);
         return response.getId();
     }
 
-    public static void removeContainer(Container container) {
-        dockerClient.killContainerCmd(container.getCid()).exec();
-        PropertyUtil.logger.log(Level.INFO, "[Docker]Container " + container.getCid() + " removed");
+    public void removeContainer(String cid) {
+        dockerClient.killContainerCmd(cid).exec();
+        LogUtil.logger.info("[ADAPTER]Container {} removed", cid.substring(0, 8));
     }
 
-    public static String[] runCommand(String id, String command) throws DockerException {
+    public String[] runCommand(String id, String command, Integer timeLimit, TimeUnit timeUnit) throws DJudgerException {
         OutputStream stdout = new ByteArrayOutputStream();
         OutputStream stderr = new ByteArrayOutputStream();
-        PropertyUtil.logger.log(Level.INFO, "[Docker]Run command " + command + " in " + id);
+        LogUtil.logger.info("[ADAPTER]Run command {} in {}", command, id.substring(0, 8));
         boolean completion;
         try {
             completion = dockerClient
                     .execStartCmd(dockerClient.execCreateCmd(id).withAttachStdout(true).withAttachStderr(true).withCmd(new String[]{"/bin/bash", "-c", command}).exec().getId())
                     .exec(new ExecStartResultCallback(stdout, stderr))
-                    .awaitCompletion(PropertyUtil.timeLimit, TimeUnit.SECONDS);
+                    .awaitCompletion(timeLimit, timeUnit);
         } catch (InterruptedException e) {
-            PropertyUtil.logger.log(Level.ERROR, "[Docker]Run Error in " + id);
-            throw new DockerException(StatusEnum.ERROR);
+            LogUtil.logger.error("[ADAPTER]Run Error in {}", id.substring(0, 8));
+            throw new DJudgerException(StatusEnum.ERROR);
         }
-        if(!completion){
-            PropertyUtil.logger.log(Level.WARN, "[Docker]Timeout in " + id);
-            throw new DockerException(StatusEnum.TIMEOUT);
+        if (!completion) {
+            LogUtil.logger.warn("[ADAPTER]Timeout in {}", id.substring(0, 8));
+            throw new DJudgerException(StatusEnum.TIMEOUT);
         }
-        return new String[]{stdout.toString(),stderr.toString()};
+        return new String[]{stdout.toString(), stderr.toString()};
     }
 
-    public static void copyFile(Container container, String hostPath, String remotePath){
-        dockerClient.copyArchiveToContainerCmd(container.getCid()).withHostResource(hostPath).withRemotePath(remotePath).exec();
+    public void copyFile(String cid, String hostPath, String remotePath) {
+        dockerClient.copyArchiveToContainerCmd(cid).withHostResource(hostPath).withRemotePath(remotePath).exec();
     }
 }

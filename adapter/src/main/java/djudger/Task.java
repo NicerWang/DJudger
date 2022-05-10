@@ -1,19 +1,20 @@
-package djudger.entity;
-
-import djudger.StatusEnum;
+package djudger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Task {
-    List<String> commands = new ArrayList<>();
-    String code;
-    String codeIdentifier;
-    String stdout;
-    String stderr;
-    String hostPath;
-    String remotePath;
-    StatusEnum status;
+    private List<String> commands = new ArrayList<>();
+    private String code;
+    private String codeIdentifier;
+    private String stdout;
+    private String stderr;
+    private String hostPath;
+    private String remotePath;
+    private Integer timeLimit;
+    private TimeUnit timeUnit = TimeUnit.MILLISECONDS;
+    private StatusEnum status;
 
     public Task(String code, String codeIdentifier) {
         this.code = code;
@@ -75,6 +76,22 @@ public class Task {
 
     public void setRemotePath(String remotePath) {
         this.remotePath = remotePath;
+    }
+
+    public Integer getTimeLimit() {
+        return timeLimit;
+    }
+
+    public void setTimeLimit(Integer timeLimit) {
+        this.timeLimit = timeLimit;
+    }
+
+    public TimeUnit getTimeUnit() {
+        return timeUnit;
+    }
+
+    public void setTimeUnit(TimeUnit timeUnit) {
+        this.timeUnit = timeUnit;
     }
 
     public StatusEnum getStatus() {
