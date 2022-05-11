@@ -114,3 +114,6 @@ Task task = allocator.runCode(lang,commands,2000,timeUnit,identifier,code);
 System.out.print(task.getStdout());
 ```
 
+## 日志
+
+使用了Slf4j，您可以自行选择底层日志系统。
