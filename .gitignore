@@ -1,0 +1,6 @@
+
+.DS_Store
+.idea/
+adapter/target
+adapter/src/test
+adapter/adapter.iml
