@@ -4,6 +4,7 @@ import djudger.*;
 import djudger.util.DockerAdapter;
 import djudger.util.FileUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,7 @@ public abstract class Allocator {
         this.config = config;
         for (LangConfig langConfig : config.languageConfig) {
             langConfigMap.put(langConfig.languageName, langConfig);
+            new File(config.codePath + File.separator + langConfig.languageName).mkdir();
         }
         Runtime.getRuntime().addShutdownHook(new Thread(){
             @Override
@@ -73,15 +75,21 @@ public abstract class Allocator {
         String affix = "/" + language + "/" + codeIdentifier;
         fileName = "/" + fileName;
         String hostFilePath = config.codePath + affix + fileName;
+        String hostDirectory = config.codePath + affix;
         String remoteFilePath = "/code" + affix + fileName;
 
+        if(!File.separator.equals("/")){
+            hostDirectory = hostDirectory.replace("/",File.separator);
+            hostFilePath = hostFilePath.replace("/",File.separator);
+        }
+
         try {
-            FileUtil.writeCode(config.codePath + affix, hostFilePath, code);
+            FileUtil.writeCode(hostDirectory, hostFilePath, code);
         } catch (IOException e) {
             throw new DJudgerException("IO Error").initCause(e);
         }
         task.setRemotePath("/code/" + language);
-        task.setHostPath(config.codePath + affix);
+        task.setHostPath(hostDirectory);
 
         for (int i = 0; i < task.getCommands().size(); i++) {
             commands.set(i, commands.get(i).replace("$(directory)", "/code" + affix));
