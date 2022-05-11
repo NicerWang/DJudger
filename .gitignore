@@ -4,3 +4,4 @@
 adapter/target
 adapter/src/test
 adapter/adapter.iml
+doc/node_modules

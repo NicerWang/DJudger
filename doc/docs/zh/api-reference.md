@@ -76,7 +76,7 @@ Config config = new Config()
 
 对于每种语言，维护一个线程池，线程池内的线程和容器一一对应，如果容器出现问题，则会删除旧容器，新建容器后替换当前线程对应的容器。
 
-参数即为 ThreadPoolExecutor 的构造参数（除 ThreadFactory ），`BlockQueue<Runable>`和`RejectedExecutionHandler`需要使用Lambda表达式提供，示例如下：
+参数即为 ThreadPoolExecutor 的构造参数（除 ThreadFactory ），`BlockQueue<Runable>`和`RejectedExecutionHandler`需要使用 Lambda 表达式提供，示例如下：
 
 ```java
 Config config = new Config(ModeEnum.THREAD_POOL)
@@ -97,7 +97,8 @@ Allocator allocator = AllocatorFactory.build(config);
 ## Allocator的runCode方法
 
 ```java
-String lang = "py"; // 语言名称
+// 语言名称，默认Python为py、Java为java、C++为c
+String lang = "py"; 
 // 需要执行的命令
 List<String> commands = Arrays.asList("python $(code)");
 // 时间限制
@@ -109,7 +110,7 @@ String identifier = "my_first_code";
 // 代码
 String code = "print(\"Hello DJudger!\")";
 Task task = allocator.runCode(lang,commands,2000,timeUnit,identifier,code);
-System.out.print(task.getStdout());
 // Task对象中含有代码的运行结果等信息
+System.out.print(task.getStdout());
 ```
 

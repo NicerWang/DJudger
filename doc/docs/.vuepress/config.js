@@ -61,7 +61,7 @@ module.exports = {
           transformer: (timestamp, lang) => {
             const moment = require('moment');
             moment.locale(lang)
-            return moment(timestamp).format('LLLL')
+            return moment(timestamp).utcOffset(480).format('LLLL') + " GMT+8"
           }
         }]
       ],

@@ -1,6 +1,6 @@
 ---
 title: Structure
 ---
-# 项目架构
+# Structure
 
-暂未完成。
+Docs are under translating.

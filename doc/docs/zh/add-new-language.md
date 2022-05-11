@@ -31,13 +31,13 @@ title: 添加新的编程语言
 
    | 名称             | 含义                                                     |
    | ---------------- | -------------------------------------------------------- |
-   | languageName     | 语言名称，为 runCode方法中需要提供的第一个参数           |
+   | languageName     | 第一步中的语言名称，为 runCode方法中需要提供的第一个参数 |
    | languageFileName | 创建的代码文件名称，对于 Java 语言需要特殊注意主类名问题 |
-   | imageName        | 构建的镜像名称                                           |
+   | imageName        | 第一步中构建的镜像名称                                   |
    | testCommand      | 测试命令                                                 |
    | testResult       | 测试正确执行的预期结果                                   |
 
-### 示例- DJudger 默认的 C++ 配置
+### 示例：DJudger 默认的 C++ 配置
 
 https://github.com/NicerWang/DJudger/tree/master/containers/c
 

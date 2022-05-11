@@ -12,7 +12,7 @@ title: 安全性是如何保证的？
    >
    > 如果遇到问题，参阅：https://docs.docker.com/engine/security/rootless/#troubleshooting
    >
-   > 如果 Docker 还需要运行其他应用容器，需要以 host 模式执行对应容器，详见参考。
+   > 如果 Docker 还需要运行其他应用容器，需要以 **host** 模式执行对应容器，详见参考。
 
    将以下内容添加到 `/etc/docker/daemon.json`，并且重启 Docker 服务：
 
@@ -62,16 +62,3 @@ title: 安全性是如何保证的？
    --cpus=1
    --pids-limit 30
    ```
-
-> 对应的Docker命令合集：
->
-> ```shell
-> sudo docker run -it \
->  --name judger-xxx \
->  -v /path/to/code/xx:/code/xx \
->  --security-opt seccomp=/path/to/seccomp/default.json \
->  --network none \
->  --cpus=1 \
->  --pids-limit 30 \
->  judger_xx
-> ```

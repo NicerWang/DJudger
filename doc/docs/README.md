@@ -9,13 +9,13 @@ sidebar: auto
 
 在右上角可切换中英文文档 / Switch Chinese and English in the upper right corner
 
-The docs are under translating.
+Docs are under translating.
 
 **If you have any problems or suggestions, welcome to contact with [@NicerWang](https://github.com/NicerWang) or submit an `Issue`.**
 
 ## Brief
 
-Docker container as sandboxes for running codes.
+Docker-based code execution container，currently **supports Java only**.
 
 By using DJudger, you can add code running capacity to your project, and the code runs efficiently and safely. DJudger has concurrent carrying capacity, is compatible with various languages, and supports multiple machines as executing machines.
 
@@ -35,7 +35,7 @@ By using DJudger, you can add code running capacity to your project, and the cod
 
 * [How to be safe?](how-to-be-safe.md)
 
-* [Structure (Unfinished)](project-structure.md)
+* [Structure](project-structure.md)
 
 ## Future
 
