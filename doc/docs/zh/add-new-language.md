@@ -1,12 +1,13 @@
 ---
 title: 添加新的编程语言
+sidebar: false
 ---
 
 # 添加新的编程语言
 
 1. 编写测试代码文件，选择合适的 Docker 镜像，定制 Dockerfile ，而后进行构建，其中至少包含以下内容：
 
-   > 为什么需要测试代码？参阅[安全性是如何实现的？](how-to-be-safe.md) #3
+   > 为什么需要测试代码？参阅[安全性是如何保证的？](how-to-be-safe.md) #3
 
    ```dockerfile
    FROM xx:version # 基础镜像

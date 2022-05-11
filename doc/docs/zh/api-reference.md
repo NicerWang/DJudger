@@ -32,7 +32,7 @@ sidebar: auto
 
   * `addLang()`
 
-    参见[添加一门新的编程语言](add-new-language.md)。
+    参见[添加新的编程语言](add-new-language.md)。
 
   * `addDefaultLang()`
 
@@ -40,7 +40,7 @@ sidebar: auto
 
   * `enableSeccomp(seccompPath)`
 
-    设置 seccomp 文件的路径，对容器进行系统调用能力限制，参见[安全性是如何实现的？](how-to-be-safe.md) #2。
+    设置 seccomp 文件的路径，对容器进行系统调用能力限制，参见[安全性是如何保证的？](how-to-be-safe.md) #2。
 
 ## Allocator模式
 

@@ -1,5 +1,6 @@
 ---
 title: Structure
+sidebar: auto
 ---
 # Structure
 

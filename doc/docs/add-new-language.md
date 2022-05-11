@@ -1,5 +1,6 @@
 ---
 title: Add New Language
+sidebar: false
 ---
 
 # Add New Language

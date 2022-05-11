@@ -8,7 +8,7 @@ sidebar: auto
 
 ## Part 1 配置
 
-0. [可选] 根据[安全性是如何实现的？](how-to-be-safe.md)中的 #1 将 Docker 设置为低权限模式。
+0. [可选] 根据[安全性是如何保证的？](how-to-be-safe.md)中的 #1 将 Docker 设置为低权限模式。
 
    在**生产环境**下部署，**必须**进行这一配置，否则无法保证安全性。
 
@@ -22,7 +22,7 @@ sidebar: auto
 
    **要求使用**： `judger_java`，`judger_c`， `judger_python`这三个固定的 imageName ，这些是 Config 中的默认值。如果修改这些名称，会导致默认提供的语言无法使用。
 
-   > 如果需要添加新的语言，参阅：[添加一门新的编程语言](add-new-language.md)
+   > 如果需要添加新的语言，参阅：[添加新的编程语言](add-new-language.md)
 
 2. 使用 Maven 和 Jar 包导入项目
 
