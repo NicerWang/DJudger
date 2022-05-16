@@ -66,7 +66,7 @@ https://github.com/NicerWang/DJudger/tree/master/containers/c
      }
      ```
 
-2. 构建容器：
+2. 构建镜像：
 
    ```shell
    cd containers/c
