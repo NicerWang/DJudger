@@ -4,6 +4,7 @@ import djudger.Config;
 import djudger.LangConfig;
 import djudger.Task;
 import djudger.allocator.Allocator;
+import djudger.allocator.classic.ClassicAllocator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +21,10 @@ public class ThreadPoolAllocator extends Allocator {
 
     public ThreadPoolAllocator(Config config) {
         super(config);
-        threadPoolAllocatorConfig = (ThreadPoolAllocatorConfig) config.allocatorConfig;
+        if(!(config.allocatorConfig instanceof ThreadPoolAllocatorConfig)){
+            threadPoolAllocatorConfig = new ThreadPoolAllocatorConfig();
+        }
+        else threadPoolAllocatorConfig = (ThreadPoolAllocatorConfig) config.allocatorConfig;
         for (LangConfig lang : langConfigMap.values()) {
             executorMap.put(lang.languageName, new ThreadPoolExecutor(threadPoolAllocatorConfig.corePoolSize,
                     threadPoolAllocatorConfig.maximumPoolSize, threadPoolAllocatorConfig.keepAliveTime,

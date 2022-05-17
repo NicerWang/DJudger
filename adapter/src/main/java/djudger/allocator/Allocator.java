@@ -41,7 +41,7 @@ public abstract class Allocator {
 
     protected abstract void removeAllContainers();
 
-    public final Task runCode(String language, List<String> commands, Integer timeLimit, TimeUnit timeUnit, String codeIdentifier, String code) throws Throwable {
+    public final Task runCode(String language, List<String> commands, Integer timeLimit, TimeUnit timeUnit, String codeIdentifier, String code) throws DJudgerException {
         if (stopped) throw new DJudgerException("DJudger has stopped");
 
         LangConfig target = langConfigMap.get(language);
@@ -64,7 +64,7 @@ public abstract class Allocator {
         return task;
     }
 
-    protected Task preProcess(String language, String fileName, List<String> rawCommands, String codeIdentifier, String code, LangConfig target) throws Throwable {
+    protected Task preProcess(String language, String fileName, List<String> rawCommands, String codeIdentifier, String code, LangConfig target) throws DJudgerException {
         if (language == null || rawCommands == null || codeIdentifier == null || code == null || rawCommands.size() == 0 || codeIdentifier.length() == 0 || code.length() == 0) {
             throw new IllegalArgumentException("No Args should be null");
         }
@@ -86,7 +86,7 @@ public abstract class Allocator {
         try {
             FileUtil.writeCode(hostDirectory, hostFilePath, code);
         } catch (IOException e) {
-            throw new DJudgerException("IO Error").initCause(e);
+            throw new DJudgerException("IO Error");
         }
         task.setRemotePath("/code/" + language);
         task.setHostPath(hostDirectory);

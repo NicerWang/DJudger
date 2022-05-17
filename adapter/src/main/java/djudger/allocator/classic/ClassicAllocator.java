@@ -16,7 +16,10 @@ public class ClassicAllocator extends Allocator {
 
     public ClassicAllocator(Config config) {
         super(config);
-        classicAllocatorConfig = (ClassicAllocatorConfig) config.allocatorConfig;
+        if(!(config.allocatorConfig instanceof ClassicAllocatorConfig)){
+            classicAllocatorConfig = new ClassicAllocatorConfig();
+        }
+        else classicAllocatorConfig = (ClassicAllocatorConfig) config.allocatorConfig;
         for (LangConfig langConfig : langConfigMap.values()) {
             langMap.put(langConfig.languageName, new Lang());
         }
