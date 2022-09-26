@@ -5,7 +5,7 @@ sidebar: auto
 
 # DJudger
 
-<img src="https://pictures-nicerwang-1256891306.cos.ap-beijing.myqcloud.com//imgicon-512.png" alt="icon-512" style="zoom:50%;" />
+<img src="./icon-512.png" style="zoom:50%;" />
 
 在右上角可切换中英文文档 / Switch Chinese and English in the upper right corner
 
