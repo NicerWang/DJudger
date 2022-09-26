@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>项目架构要点 | DJudger文档</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="manifest" href="/DJudger/manifest.webmanifest">
+    <link rel="icon" type="image/png" sizes="196x196" href="/DJudger/favicon.png">
+    <link rel="apple-touch-icon" href="/DJudger/apple-icon-180.png">
+    <meta name="description" content="基于 Docker 的代码执行容器">
+    <meta name="theme-color" content="#fff">
+    
+    <link rel="preload" href="/DJudger/assets/css/0.styles.3b630466.css" as="style"><link rel="preload" href="/DJudger/assets/js/app.70bc3dfc.js" as="script"><link rel="preload" href="/DJudger/assets/js/2.07cfd758.js" as="script"><link rel="preload" href="/DJudger/assets/js/9.ef9ab4c1.js" as="script"><link rel="prefetch" href="/DJudger/assets/js/10.6763030a.js"><link rel="prefetch" href="/DJudger/assets/js/11.12975581.js"><link rel="prefetch" href="/DJudger/assets/js/12.6de07b4c.js"><link rel="prefetch" href="/DJudger/assets/js/13.c1fad34c.js"><link rel="prefetch" href="/DJudger/assets/js/14.039418ab.js"><link rel="prefetch" href="/DJudger/assets/js/15.a780e9bd.js"><link rel="prefetch" href="/DJudger/assets/js/16.8295dec8.js"><link rel="prefetch" href="/DJudger/assets/js/17.c56eeace.js"><link rel="prefetch" href="/DJudger/assets/js/18.00d4a1d4.js"><link rel="prefetch" href="/DJudger/assets/js/3.83dff5fa.js"><link rel="prefetch" href="/DJudger/assets/js/4.a392a993.js"><link rel="prefetch" href="/DJudger/assets/js/5.277a191f.js"><link rel="prefetch" href="/DJudger/assets/js/6.84f452a2.js"><link rel="prefetch" href="/DJudger/assets/js/7.db105d20.js"><link rel="prefetch" href="/DJudger/assets/js/8.0c5bfece.js">
+    <link rel="stylesheet" href="/DJudger/assets/css/0.styles.3b630466.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/DJudger/zh/" class="home-link router-link-active"><img src="/DJudger/icon-512.png" alt="DJudger文档" class="logo"> <span class="site-name can-hide">DJudger文档</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/DJudger/zh/quick-start.html" class="nav-link">
+  快速入门
+</a></div><div class="nav-item"><a href="/DJudger/zh/api-reference.html" class="nav-link">
+  常用配置项参考
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">Languages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">Languages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/DJudger/project-structure.html" class="nav-link">
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/DJudger/zh/project-structure.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  简体中文
+</a></li></ul></div></div> <a href="https://github.com/NicerWang/DJudger" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/DJudger/zh/quick-start.html" class="nav-link">
+  快速入门
+</a></div><div class="nav-item"><a href="/DJudger/zh/api-reference.html" class="nav-link">
+  常用配置项参考
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">Languages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">Languages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/DJudger/project-structure.html" class="nav-link">
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/DJudger/zh/project-structure.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  简体中文
+</a></li></ul></div></div> <a href="https://github.com/NicerWang/DJudger" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>项目架构要点</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/DJudger/zh/project-structure.html#代码是如何被执行的" class="sidebar-link">代码是如何被执行的？</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/DJudger/zh/project-structure.html#为什么需要定制-docker-镜像" class="sidebar-link">为什么需要定制 Docker 镜像？</a><ul class="sidebar-sub-headers"></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="项目架构要点"><a href="#项目架构要点" class="header-anchor">#</a> 项目架构要点</h1> <h2 id="代码是如何被执行的"><a href="#代码是如何被执行的" class="header-anchor">#</a> 代码是如何被执行的？</h2> <p><img src="/DJudger/assets/img/structure.4e60fbfa.png" alt=""></p> <p>代码实际上是在 Docker 容器中被执行，这些容器来源于定制的镜像，由这些镜像生成的容器除了（编译）执行代码之外，不负责其他任何任务。</p> <p>DJudger 实际上处理了容器的创建、删除、分配等工作。</p> <h2 id="为什么需要定制-docker-镜像"><a href="#为什么需要定制-docker-镜像" class="header-anchor">#</a> 为什么需要定制 Docker 镜像？</h2> <ol><li>需要为每种语言设计对应的（编译）执行环境，这一环境就由 Docker 镜像体现。</li> <li>代码执行并不总是顺利的，需要编写测试代码，在每次运行结束后，对容器进行测试，以保证容器能够顺利执行后续任务。</li></ol></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2022年9月26日星期一下午4点45分 GMT+8</span></div></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/DJudger/assets/js/app.70bc3dfc.js" defer></script><script src="/DJudger/assets/js/2.07cfd758.js" defer></script><script src="/DJudger/assets/js/9.ef9ab4c1.js" defer></script>
+  </body>
+</html>
